@@ -20,8 +20,8 @@ class MainActivity : ComponentActivity() {
         setContent {
             YelpTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    DisplayYelpList(45.77, 87.99)
-                    DisplayMap()
+                    DisplayYelpList(37.786, -122.399)
+                    //DisplayMap()
                 }
             }
         }

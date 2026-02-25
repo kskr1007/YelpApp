@@ -1,7 +1,9 @@
 package com.example.yelp
 
+import android.content.Intent
 import android.util.Log
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -12,6 +14,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.core.net.toUri
+import coil.compose.AsyncImage
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
@@ -46,64 +50,41 @@ fun DisplayYelpList(lat: Double, lon: Double) {
 
 @Composable
 fun YelpBusinessCard(yelp: YelpBusiness, modifier:Modifier=Modifier){
+    val context= LocalContext.current
     Card(modifier=Modifier.fillMaxWidth()
-        .padding(1.dp)){
+        .padding(1.dp)
+        //add
+        .clickable(
+            onClick={
+                val yelpCardIntent= Intent(Intent.ACTION_VIEW)
+                    .apply{
+                        data= yelp.url.toUri()
+                    }
+                context.startActivity(yelpCardIntent)
+            }
+        )
+
+    )  {
+
         Row(modifier=Modifier.padding(2.dp)) {
-            Image(
-                painter = painterResource(R.drawable.adventure_brewing),
+            // Image(
+            // painter = painterResource(R.drawable.adventure_brewing),
+            AsyncImage(
+                model=yelp.icon,
                 contentDescription = null,
                 modifier = Modifier
                     .size(60.dp)
                     .padding(1.dp)
             )
+            //AsyncImage  use model verses painter. model=yelp.icon
             Spacer(modifier=Modifier.width(5.dp))
             Column() {
                 Text(yelp.restaurantName)
                 Text(yelp.category)
                 Text(yelp.rating.toString())
-                Text(yelp.url)
+                //Text(yelp.url)
             }
 
         }
     }
 }
-
-
-fun getFakeData():List<YelpBusiness>{
-    return listOf(
-        YelpBusiness("Panera","Breakfast",4.2,"https://...", "none"),
-        YelpBusiness("WingsToGo","Comfort",5.3,"https://...", "none"),
-        YelpBusiness("Log Cabin","Seafood",4.2,"https://...", "none"),
-        YelpBusiness("Dunkin Donut","Breakfast",3.1,"https://...", "none"),
-        YelpBusiness("Starbucks","Coffee",3.1,"https://...", "none"),
-        YelpBusiness("Panera","Breakfast",3.1,"https://...", "none"),
-        YelpBusiness("Panera","Breakfast",3.1,"https://...", "none"),
-        YelpBusiness("Panera","Breakfast",2.8,"https://...", "none"),
-        YelpBusiness("Panera","Breakfast",5.3,"https://...", "none"),
-        YelpBusiness(icon="https://....", category="Dinner", rating=1.2, restaurantName ="Subway",url="none"),
-        YelpBusiness("Panera","Breakfast",4.2,"https://...", "none"),
-        YelpBusiness("WingsToGo","Comfort",5.3,"https://...", "none"),
-        YelpBusiness("Log Cabin","Seafood",4.2,"https://...", "none"),
-        YelpBusiness("Dunkin Donut","Breakfast",3.1,"https://...", "none"),
-        YelpBusiness("Starbucks","Coffee",3.1,"https://...", "none"),
-        YelpBusiness("Panera","Breakfast",3.1,"https://...", "none"),
-        YelpBusiness("Panera","Breakfast",3.1,"https://...", "none"),
-        YelpBusiness("Panera","Breakfast",2.8,"https://...", "none"),
-        YelpBusiness("Panera","Breakfast",5.3,"https://...", "none")
-    )
-}
-
-/*
-@Preview(showBackground =true)
-@Composable
-fun YelpCardPreview(){
-    val yelp = YelpBusiness("Panera","Breakfast",4.2,"https://...", "none")
-    YelpBusinessCard(yelp)
-}
- */
-
-//@Preview(showBackground =true)
-@Composable
-fun DisplayYelpPreview(){
-     DisplayYelpList(55.67,45.67)
- }
