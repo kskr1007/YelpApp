@@ -60,7 +60,7 @@ dependencies {
     //Yelp Manager implementation
     implementation("com.squareup.okhttp3:okhttp:4.12.0")
     implementation("com.squareup.okhttp3:logging-interceptor:4.12.0")
-// coil dependency for image loading
+    // coil dependency for image loading
     implementation("io.coil-kt:coil-compose:2.7.0")
 
 }

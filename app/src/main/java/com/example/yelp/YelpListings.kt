@@ -1,31 +1,44 @@
 package com.example.yelp
 
+import android.util.Log
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Card
 import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 @Composable
-fun DisplayYelpList(modifier: Modifier=Modifier){
-    val myYelpList = getFakeData()
-    LazyColumn(modifier = modifier) {
-        items(myYelpList){currentYelp ->
+fun DisplayYelpList(lat: Double, lon: Double) {
+
+    val context = LocalContext.current
+    val yelpManager = YelpManager()
+    val apiKey = context.getString(R.string.YelpKey)
+
+    var myYelpList by remember { mutableStateOf<List<YelpBusiness>>(emptyList()) }
+
+    LaunchedEffect(lat, lon) {
+        val result = withContext(Dispatchers.IO) {
+            yelpManager.retrieveYelps(lat, lon, apiKey)
+        }
+        myYelpList = result
+        Log.d("YelpCount", "myYelpList is ${myYelpList.size}")
+    }
+
+    LazyColumn(
+        modifier = Modifier.fillMaxSize()
+    ) {
+        items(myYelpList) { currentYelp ->
             YelpBusinessCard(
                 yelp = currentYelp,
-                modifier = Modifier.padding(1.dp)
+                modifier = Modifier.padding(8.dp)
             )
         }
     }
@@ -89,8 +102,8 @@ fun YelpCardPreview(){
 }
  */
 
-@Preview(showBackground =true)
+//@Preview(showBackground =true)
 @Composable
 fun DisplayYelpPreview(){
-     DisplayYelpList()
+     DisplayYelpList(55.67,45.67)
  }
