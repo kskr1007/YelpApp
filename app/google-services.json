@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "473076871807",
+    "project_id": "yelp-ca100",
+    "storage_bucket": "yelp-ca100.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:473076871807:android:037c7a192b7ab3b759854a",
+        "android_client_info": {
+          "package_name": "com.example.yelp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAzzWLpc2uUZJxeK9xlRKU1Kj7cpuOB-FQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

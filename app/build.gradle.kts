@@ -2,14 +2,12 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.compose)
     id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin")
-
+    id("com.google.gms.google-services")
 }
 
 android {
     namespace = "com.example.yelp"
-    compileSdk {
-        version = release(36)
-    }
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "com.example.yelp"
@@ -49,6 +47,13 @@ dependencies {
     implementation(libs.androidx.compose.ui.tooling.preview)
     implementation(libs.androidx.compose.material3)
     implementation(libs.play.services.maps)
+    implementation(libs.androidx.navigation.compose)
+    
+    // Firebase
+    implementation(platform("com.google.firebase:firebase-bom:33.9.0"))
+    implementation("com.google.firebase:firebase-auth-ktx")
+    implementation("com.google.firebase:firebase-analytics-ktx")
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -62,5 +67,4 @@ dependencies {
     implementation("com.squareup.okhttp3:logging-interceptor:4.12.0")
     // coil dependency for image loading
     implementation("io.coil-kt:coil-compose:2.7.0")
-
 }
